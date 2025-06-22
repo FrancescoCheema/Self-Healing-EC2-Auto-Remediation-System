@@ -99,8 +99,8 @@ resource "aws_lambda_function" "ec2_remediator" {
   role          = aws_iam_role.lambda_role.arn
   handler       = "index.lambda_handler"
   runtime       = "python3.9"
-  filename      = "lambda/lambda_function_payload.zip"
-  source_code_hash = filebase64sha256("lambda/lambda_function_payload.zip")
+  filename      = "lambda/lambda.zip"
+  source_code_hash = filebase64sha256("lambda/lambda.zip")
 }
 
 resource "aws_lambda_permission" "allow_cloudwatch" {

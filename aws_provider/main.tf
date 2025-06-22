@@ -42,7 +42,7 @@ resource "aws_sns_topic" "alarm" {
 EOF
   ## This local exec, suscribes your email to the topic 
   provisioner "local-exec" {
-    command = "aws sns subscribe --topic-arn ${self.arn} --protocol email --notification-endpoint ${var.cekkosingh@gmail.com} --region ${var.ca-central-1}"
+    command = "aws sns subscribe --topic-arn ${self.arn} --protocol email --notification-endpoint ${var.alert_email} --region ${var.region}"
   }
 }
 
@@ -65,7 +65,7 @@ resource "aws_cloudwatch_metric_alarm" "foobar" {
   threshold                 = 80
   alarm_description         = "This metric monitors EC2 CPU utilization"
   insufficient_data_actions = []
-  alarm_actions             = [aws_lambda_function.ec2_remediator.arn, aws_sns_topic.notify_team.arn]
+  alarm_actions             = [aws_lambda_function.ec2_remediator.arn, aws_sns_topic.alarm.arn]
 }
 
 resource "aws_iam_role" "lambda_role" {
